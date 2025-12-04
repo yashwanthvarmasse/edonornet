@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application Successful | eDonorNet</title>
+    <title>Request Rejected | eDonorNet</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #e53935;
-            /* Using Bootstrap's success green for this page */
-            --success: #198754;
+            --secondary: #1976d2;
             --light: #f8f9fa;
             --dark: #212529;
+            --danger: #dc3545; /* Explicit danger for rejected status */
         }
 
         body {
@@ -22,6 +22,7 @@
             background-color: var(--light);
         }
 
+        /* --- Navbar Styles (unchanged) --- */
         .navbar {
             background-color: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -92,47 +93,11 @@
             color: #adb5bd;
         }
 
-        /* Styles for the progress timeline */
-        .timeline {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin: 40px 0;
-        }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 18px;
-            left: 5%;
-            width: 90%;
-            height: 4px;
-            /* Use success color for the line */
-            background-color: var(--success);
-            z-index: 1;
-        }
-        .timeline-step {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            width: 33.33%;
-        }
-        .timeline-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--success); /* All steps are done */
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            border: 4px solid var(--light);
-            margin: 0 auto;
-        }
-        .timeline-step p {
-            margin-top: 10px;
-            font-weight: 500;
-            color: var(--dark); /* All steps are done */
+        /* Specific style for details box */
+        .request-details {
+            border-left: 5px solid var(--danger);
+            padding-left: 20px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -150,13 +115,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/user/dashboard">My Dashboard</a>
+                    <a class="nav-link" href="/user/dashboard">My Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/user/donor">Donor Registration</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/recipient">Request Blood</a>
+                    <a class="nav-link active" href="/user/recipient">Request Blood</a>
                 </li>
                 <li class="nav-item">
                     <div class="user-profile">
@@ -169,13 +134,13 @@
     </div>
 </nav>
 
-<section class="py-5" style="background-color: rgba(25, 135, 84, 0.05);">
+<section class="py-5" style="background-color: rgba(220, 53, 69, 0.05);">
     <div class="container text-center">
-        <div class="feature-icon bg-success bg-opacity-10 text-success rounded-circle mx-auto mb-4" style="width: 4rem; height: 4rem; display: flex; align-items: center; justify-content: center;">
-            <i class="fas fa-check-circle fa-2x"></i>
+        <div class="feature-icon bg-danger bg-opacity-10 text-danger rounded-circle mx-auto mb-4" style="width: 4rem; height: 4rem; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-times-circle fa-2x"></i>
         </div>
-        <h1 class="display-5 fw-bold">Application Approved!</h1>
-        <p class="lead text-muted">Congratulations! You are now an active donor on eDonorNet.</p>
+        <h1 class="display-5 fw-bold text-danger">Blood Request Rejected</h1>
+        <p class="lead text-muted">We sincerely apologize, but your blood request application could not be approved for the safety of the process.</p>
     </div>
 </section>
 
@@ -185,64 +150,54 @@
             <div class="col-lg-10">
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4 p-md-5">
-                        <h2 class="text-center mb-4">Welcome, Active Donor!</h2>
+                        <h2 class="text-center mb-4">Request Details & Rejection Summary</h2>
 
-                        <div class="row mb-4 text-center text-md-start">
-                            <div class="col-md-4">
-                                <p class="text-muted mb-0">Application ID</p>
-                                <p class="fw-bold">DON-${donor.id}</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="text-muted mb-0">Approved On</p>
-                                <p class="fw-bold">${donor.approvalDate}</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="text-muted mb-0">Current Status</p>
-                                <p class="fw-bold fs-5">
-                                    <span class="badge bg-success">${donor.status}</span>
-                                </p>
-                            </div>
-                        </div>
-                        <hr>
-                        <h4 class="mt-4 mb-3">Application Progress</h4>
-                        <div class="timeline">
-                            <div class="timeline-step completed">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <p>Submitted</p>
-                            </div>
-                            <div class="timeline-step completed">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <p>Reviewed</p>
-                            </div>
-                            <div class="timeline-step completed">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <p>Approved</p>
-                            </div>
-                            <div class="timeline-step" >
-                                <div class="timeline-icon">
-                                    <i class="fas fa-hand-holding-droplet"></i>
-                                </div>
-                                <p>Donated</p>
-                            </div>
+                        <div class="request-details mb-5">
+                            <p class="mb-0"><strong>Request ID:</strong> RQS-${recipient.id}</p>
+                            <p class="mb-0"><strong>Patient Name:</strong> ${recipient.patientName}</p>
+                            <p class="mb-0"><strong>Blood Group:</strong> ${recipient.bloodGroup}</p>
+                            <p class="mb-0"><strong>Status:</strong> <span class="badge bg-danger">${recipient.status}</span></p>
                         </div>
 
-                        <h4 class="mt-5">What's Next?</h4>
-                        <div class="alert alert-success" role="alert">
-                            <h5 class="alert-heading">Your Profile is Active!</h5>
-                            <p>Thank you for your willingness to save lives. Your profile is now visible to hospitals and recipients in need.</p>
+                        <div class="alert alert-danger" role="alert" id="reasons-alert-box">
+                            <h4 class="alert-heading">Reason(s) for Rejection:</h4>
+                            <p>To resubmit, please review and correct the following issues:</p>
                             <hr>
-                            <p class="mb-0">You will now receive email and dashboard alerts when a blood request matching your profile is made in your area. Please keep your contact information up-to-date.</p>
+                            <ul class="mb-0" id="reasons-list">
+                                <c:choose>
+                                    <c:when test="${not empty reasons}">
+                                        <c:forEach var="reason" items="${reasons}">
+                                            <li><i class="fas fa-minus-circle me-2"></i>${reason}</li>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><i class="fas fa-file-excel me-2"></i> **Missing or Invalid Prescription:** The uploaded prescription was illegible, expired, or not from a licensed physician.</li>
+                                        <li><i class="fas fa-map-marker-alt me-2"></i> **Unverified Hospital/Location:** The specified hospital or address could not be verified or is outside our service area.</li>
+                                        <li><i class="fas fa-phone-slash me-2"></i> **Unreachable Contact:** The attendant's contact number was unavailable or repeatedly unreachable during the verification call.</li>
+                                        <li><i class="fas fa-info-circle me-2"></i> **Incomplete/Inaccurate Data:** Key fields in the application were left blank or contained contradictory information.</li>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <%--
+                                <% List<String> reasonsList = (List<String>) request.getAttribute("reasons");
+                                   if (reasonsList != null) {
+                                       for (String reason : reasonsList) { %>
+                                           <li><i class="fas fa-minus-circle me-2"></i> <%= reason %></li>
+                                       <% }
+                                   } %>
+                                --%>
+                            </ul>
                         </div>
+
+                        <h4 class="mt-5">What to Do Next</h4>
+                        <p class="lead">You can correct the issues mentioned above and **resubmit a new request** immediately.</p>
 
                         <div class="text-center mt-4">
-                            <a href="/user/dashboard" class="btn btn-success btn-lg">
-                                <i class="fas fa-tachometer-alt me-2"></i>Go to My Dashboard
+                            <a href="/user/recipient" class="btn btn-danger btn-lg">
+                                <i class="fas fa-redo me-2"></i>Resubmit Blood Request
+                            </a>
+                            <a href="/user/dashboard" class="btn btn-outline-secondary btn-lg ms-3">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
                             </a>
                         </div>
                     </div>
@@ -264,7 +219,7 @@
                 <h5 class="mb-3">Quick Links</h5>
                 <ul class="list-unstyled">
                     <li class="mb-2"><a href="/user/donor">Donor Registration</a></li>
-                    <li class="mb-2"><a href="/user/recipient">Blood Request</a></li>
+                    <li class="mb-2"><a class="active" href="/user/recipient">Blood Request</a></li>
                     <li class="mb-2"><a href="/admin/login">Admin Dashboard</a></li>
                 </ul>
             </div>
@@ -282,6 +237,5 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

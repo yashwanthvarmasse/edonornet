@@ -77,7 +77,7 @@
                         <p class="mb-4">An account with this email address is already registered.</p>
 
                         <div class="d-grid gap-3">
-                            <a href="/signin" class="btn btn-primary py-2">
+                            <a href="/user/signin" class="btn btn-primary py-2">
                                 <i class="fas fa-sign-in-alt me-2"></i> Login Instead
                             </a>
                             <a href="/forget" class="btn btn-outline-primary py-2">

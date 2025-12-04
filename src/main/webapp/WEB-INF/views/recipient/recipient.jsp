@@ -34,47 +34,96 @@
             font-size: 1.5rem;
         }
 
-        .registration-header {
-            background: linear-gradient(rgba(229, 57, 53, 0.9), rgba(229, 57, 53, 0.9));
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px 0;
-            margin-bottom: 30px;
-        }
-
-        .registration-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
-
-        .card-header {
-            background-color: var(--primary);
-            color: white;
-            border-radius: 10px 10px 0 0 !important;
-        }
-
-        .btn-register {
-            background-color: var(--primary);
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
         }
 
-        .medical-section {
-            border-left: 4px solid var(--primary);
-            padding-left: 15px;
-            margin: 25px 0;
-        }
-        .navbar {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 15px 0;
+        .user-avatar-large {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
         }
 
-        .navbar-brand {
-            font-weight: 700;
-            color: var(--primary) !important;
-            font-size: 1.5rem;
+        .user-name {
+            font-weight: 500;
+        }
+
+        .dropdown-menu {
+            min-width: 280px;
+            padding: 0.5rem 0;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-header {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 0.5rem 0.5rem 0 0;
+            margin-bottom: 0.25rem;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1.25rem;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-item.text-danger:hover {
+            background-color: #fff5f5;
+            color: #dc3545 !important;
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+            opacity: 0.1;
+        }
+
+        .nav-link.dropdown-toggle {
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .nav-link.dropdown-toggle:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .navbar-light .navbar-nav .nav-link.active {
+            font-weight: 500;
+            color: #667eea;
+        }
+
+        .shadow {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
         }
 
         .navbar-brand i {
@@ -100,24 +149,6 @@
             width: 100%;
             height: 2px;
             background-color: var(--primary);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-            font-weight: bold;
         }
         footer {
             background-color: var(--dark);
@@ -194,11 +225,40 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="/user/recipient">Request Blood</a>
                 </li>
-                <li class="nav-item">
-                    <div class="user-profile">
-                        <div class="user-avatar">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
-                        <span >${logged_user.firstname}</span>
-                    </div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center"
+                       href="#"
+                       id="profileDropdown"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <div class="user-avatar me-2">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
+                        <span class="user-name">${logged_user.firstname}</span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
+                        <li class="dropdown-header">
+                            <div class="d-flex align-items-center">
+                                <div class="user-avatar-large me-2">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
+                                <div>
+                                    <div class="fw-bold">${logged_user.firstname} ${logged_user.lastname}</div>
+                                    <small class="text-muted">${logged_user.email}</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item py-2" href="/user/settings">
+                                <i class="fas fa-cog me-2 text-secondary"></i>Settings
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item py-2 text-danger" href="/user/logout">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -321,12 +381,12 @@
                             <div class="col-md-6">
                                 <label for="attendantName" class="form-label">Attendant's Contact Name</label>
                                 <!-- Logged-in user's name can be pre-filled here -->
-                                <input type="text" class="form-control" id="attendantName" name="attendantName" value="${logged_user.firstname} ${logged_user.lastname}" required>
+                                <input type="text" class="form-control" id="attendantName" name="attendantName" value="${logged_user.firstname} ${logged_user.lastname}" readonly>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="attendantPhone" class="form-label">Attendant's Contact Phone</label>
-                                <input type="tel" class="form-control" id="attendantPhone" name="attendantPhone" placeholder="1234567890" required>
+                                <input type="tel" class="form-control" id="attendantPhone" name="attendantPhone" placeholder="${logged_user.phone}" readonly>
                             </div>
 
                             <div class="col-md-6">
@@ -334,13 +394,13 @@
                                 <input type="text" class="form-control" id="doctorName" name="doctorName" placeholder="e.g., Dr. Patel">
                             </div>
 
-                            <h4 class="mt-4 border-bottom pb-2">Verification</h4>
+<%--                            <h4 class="mt-4 border-bottom pb-2">Verification</h4>--%>
 
-                            <div class="col-12">
-                                <label for="prescriptionUpload" class="form-label">Upload Doctor's Prescription / Request Form</label>
-                                <input class="form-control" type="file" id="prescriptionUpload" name="prescriptionUpload" accept="image/*,.pdf" required>
-                                <div class="form-text">A valid prescription or hospital request letter is **required** for verification.</div>
-                            </div>
+<%--                            <div class="col-12">--%>
+<%--                                <label for="prescriptionUpload" class="form-label">Upload Doctor's Prescription / Request Form</label>--%>
+<%--                                <input class="form-control" type="file" id="prescriptionUpload" name="prescriptionUpload" accept="image/*,.pdf" required>--%>
+<%--                                <div class="form-text">A valid prescription or hospital request letter is **required** for verification.</div>--%>
+<%--                            </div>--%>
 
                             <div class="col-12 mt-4">
                                 <div class="form-check">

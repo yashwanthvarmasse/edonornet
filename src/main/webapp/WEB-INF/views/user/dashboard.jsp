@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.edonornet.main.model.Donor" %>
+<%@ page import="com.edonornet.main.model.Recipient" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,17 +78,12 @@
             height: 2px;
             background-color: var(--primary);
         }
-
-        .registration-header,
         .dashboard-header {
             background: linear-gradient(rgba(229, 57, 53, 0.9), rgba(229, 57, 53, 0.9));
             color: #fff;
             padding: 40px 0;
             margin-bottom: 30px;
         }
-
-        /* Cards */
-        .registration-card,
         .stats-card,
         .donation-history,
         .achievements {
@@ -98,9 +94,6 @@
             padding: 20px;
             border-left: 4px solid var(--primary);
         }
-
-        /* Buttons */
-        .btn-register,
         .btn-donate {
             background-color: var(--primary);
             color: #fff;
@@ -112,30 +105,99 @@
             cursor: pointer;
         }
 
-        .btn-donate:hover,
-        .btn-register:hover {
+        .btn-donate:hover{
             background-color: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(229, 57, 53, 0.3);
         }
-
-        /* User profile */
-        .user-profile {
-            display: flex;
-            align-items: center;
-        }
-
         .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .user-avatar-large {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: var(--primary);
-            color: #fff;
-            display: flex;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-right: 10px;
-            font-weight: 700;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .user-name {
+            font-weight: 500;
+        }
+
+        .dropdown-menu {
+            min-width: 280px;
+            padding: 0.5rem 0;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-header {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 0.5rem 0.5rem 0 0;
+            margin-bottom: 0.25rem;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1.25rem;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-item.text-danger:hover {
+            background-color: #fff5f5;
+            color: #dc3545 !important;
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+            opacity: 0.1;
+        }
+
+        .nav-link.dropdown-toggle {
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .nav-link.dropdown-toggle:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .navbar-light .navbar-nav .nav-link.active {
+            font-weight: 500;
+            color: #667eea;
+        }
+
+        .shadow {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
         }
 
         .welcome-message h1 {
@@ -166,8 +228,6 @@
         .achievement-badge.unlocked i {
             color: gold;
         }
-
-        /* Utilities */
         .blood-type {
             display: inline-block;
             padding: 5px 15px;
@@ -194,7 +254,6 @@
             color: #dee2e6;
         }
 
-        /* Footer */
         footer {
             background-color: var(--dark);
             color: #fff;
@@ -236,8 +295,7 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .btn-donate,
-            .btn-register {
+            .btn-donate {
                 transition: none;
             }
 
@@ -291,11 +349,39 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/user/recipient">Request Blood</a>
                 </li>
-                <li class="nav-item">
-                    <div class="user-profile">
-                        <div class="user-avatar">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
-                        <span >${logged_user.firstname}</span>
-                    </div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center"
+                       href="#"
+                       id="profileDropdown"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <div class="user-avatar me-2">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
+                        <span class="user-name">${logged_user.firstname}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
+                        <li class="dropdown-header">
+                            <div class="d-flex align-items-center">
+                                <div class="user-avatar-large me-2">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
+                                <div>
+                                    <div class="fw-bold">${logged_user.firstname} ${logged_user.lastname}</div>
+                                    <small class="text-muted">${logged_user.email}</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item py-2" href="/user/settings">
+                                <i class="fas fa-cog me-2 text-secondary"></i>Settings
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item py-2 text-danger" href="/user/logout">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -310,11 +396,6 @@
                     <h1>Welcome back, <span>${logged_user.firstname} ${logged_user.lastname}</span>!</h1>
                     <p class="lead">Your blood donations have helped save lives. Ready to make a difference again?</p>
                 </div>
-            </div>
-            <div class="col-md-4 text-md-end">
-                <form action="/user/logout" method="post">
-                    <button class="btn btn-donate">Logout</button>
-                </form>
             </div>
         </div>
     </div>
@@ -392,7 +473,7 @@
                             <td><%= d.getVolume() %></td>
                             <td><%= d.getStatus()%></td>
                             <td>
-                                <a href="/user/donor/registration/<%= d.getId() %>" class="btn btn-danger btn-sm">
+                                <a href="/user/donor/registration/DNR-<%= d.getId() %>" class="btn btn-danger btn-sm">
                                     View More
                                 </a>
                             </td>
@@ -419,9 +500,54 @@
                             <th>Patient Name</th>
                             <th>Blood Type</th>
                             <th>Units</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody id="recipienthistory">
+                        <%
+                            List<Recipient> recipients = (List<Recipient>) request.getAttribute("requests");
+
+                            if (recipients == null || recipients.isEmpty()) {
+                        %>
+                        <tr>
+                            <td colspan="4">
+                                <form action="/user/recipient" method="get">
+                                    <div class="empty-state">
+                                        <i class="fas fa-tint"></i>
+                                        <h5>No blood requests yet</h5>
+                                        <p>If you or someone you know is in need, you can submit a request.</p>
+                                        <button class="btn-donate">Request Now</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <%
+                        } else {
+                        %>
+                        <tr>
+                                <%
+                                for (Recipient r : recipients) {
+                            %>
+                        <tr>
+                            <td><%= r.getDate() %></td>
+                            <td><%= r.getPatientName()%></td>
+                            <td><%= r.getBloodGroup()%></td>
+                            <td><%= r.getUnits() %></td>
+                            <td><%= r.getStatus() %></td>
+                            <td>
+                                <a href="/user/recipient/registration/RCP-<%= r.getId() %>" class="btn btn-danger btn-sm">
+                                    View More
+                                </a>
+                            </td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                        </tr>
+                        <%
+                            }
+                        %>
+
                         </tbody>
                     </table>
                 </div>
@@ -520,26 +646,5 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    const receivings=${logged_user.no_of_receivings};
-
-    if (receivings === 0) {
-        document.getElementById('recipienthistory').innerHTML = `
-                <tr>
-                    <td colspan="4">
-                        <form action="/user/recipient" method="get">
-                            <div class="empty-state">
-                            <i class="fas fa-tint"></i>
-                            <h5>No blood requests yet</h5>
-                            <p>If you or someone you know is in need, you can submit a request.</p>
-                            <button class="btn-donate">Request Now</button>
-                        </div>
-                        </form>
-                    </td>
-                </tr>
-            `;
-    }
-</script>
 </body>
 </html>

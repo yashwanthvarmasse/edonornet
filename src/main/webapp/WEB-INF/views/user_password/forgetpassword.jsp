@@ -82,7 +82,7 @@
         <div class="text-center mt-4">
             <p class="text-muted">
                 Remembered your password?
-                <a href="/signin">Back to Login</a>
+                <a href="/user/signin">Back to Login</a>
             </p>
         </div>
 

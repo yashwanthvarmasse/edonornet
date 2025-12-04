@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Entity
 @Table
 @Getter
@@ -27,7 +30,9 @@ public class Recipient {
     private String attendantName;
     private Long attendantPhone;
     private String doctorName;
-    private String prescriptionUpload;
+//    private String prescriptionUpload;
+    private LocalDate date;
+    private LocalDate recivedDate;
     private String status;
     private String reason;
 

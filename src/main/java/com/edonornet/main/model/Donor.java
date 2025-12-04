@@ -47,6 +47,7 @@ public class Donor {
     private int volume;
     private LocalDate date;
     private LocalDate donatedDate;
-    private LocalDate approvedDate;
+    private LocalDate approvedDate=LocalDate.now();
+    private String HospitalName;
 
 }

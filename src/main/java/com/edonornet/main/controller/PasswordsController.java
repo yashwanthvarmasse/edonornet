@@ -22,14 +22,14 @@ public class PasswordsController {
 
     @GetMapping("/forget")
     public String forget(){
-        return "forgetpassword";
+        return "user_password/forgetpassword";
     }
 
     @PostMapping("/passwordreset")
     public String reset(@RequestParam String email, HttpSession session){
         User user=userService.find(email);
         if(user==null)
-            return "notfound";
+            return "user_password/notfound";
         else{
             session.setAttribute("demouser",user);
             return "redirect:/resetpassword";
@@ -38,7 +38,7 @@ public class PasswordsController {
 
     @GetMapping("/resetpassword")
     public String set(){
-        return "resetpassword";
+        return "user_password/resetpassword";
     }
 
     @PostMapping("/reset_password")

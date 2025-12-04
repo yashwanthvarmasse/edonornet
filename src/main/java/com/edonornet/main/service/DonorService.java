@@ -30,4 +30,9 @@ public class DonorService {
         return donorRepo.findById(Id).orElse(null);
     }
 
+    public List<Donor> findAll(){
+        List<Donor> donations = donorRepo.findAll();
+        return donations==null? Collections.emptyList():donations;
+    }
+
 }

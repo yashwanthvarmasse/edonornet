@@ -200,7 +200,7 @@
     <div class="container text-center">
         <h2 class="mb-4">In Urgent Need of Blood?</h2>
         <p class="lead mb-4">Login to Submit your request through our secure platform to connect with available donors immediately.</p>
-        <a href="/signin" class="btn btn-danger btn-lg px-4">Login</a>
+        <a href="/user/signin" class="btn btn-danger btn-lg px-4">Login</a>
     </div>
 </section>
 

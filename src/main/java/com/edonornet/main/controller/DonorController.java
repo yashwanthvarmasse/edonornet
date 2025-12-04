@@ -22,7 +22,7 @@ public class DonorController {
 
     @GetMapping("/donation_info")
     public String donation_info(){
-        return "donation_info";
+        return "donor/donation_info";
     }
 
     @PostMapping("donor-registration")
@@ -63,7 +63,7 @@ public class DonorController {
             donor.setStatus("Pending Review");
             donorService.save(donor);
             session.setAttribute("donations",donorService.findDonor(donor.getEmail()));
-            return "redirect:/user/donor/registration/successful/"+donor.getId();
+            return "redirect:/user/donor/registration/successful/DNR-"+donor.getId();
         }
     }
 
@@ -73,7 +73,7 @@ public class DonorController {
         List<String> listOfReasons= List.of(reasons.split(","));
         model.addAttribute("reasons",listOfReasons==null? Collections.emptyList():listOfReasons);
         model.addAttribute(session.getAttribute("logged_user"));
-        return "registration-failed";
+        return "donor/registration-failed";
     }
 
     @GetMapping("/user/donor/registration/successful/DNR-{id}")
@@ -81,7 +81,7 @@ public class DonorController {
         Donor donor= donorService.findById(id);
         model.addAttribute(session.getAttribute("logged_user"));
         model.addAttribute("donor",donor);
-        return "donor-registration";
+        return "donor/donor-registration";
     }
 
     @GetMapping("/user/donor/registration/DNR-{id}")
@@ -89,6 +89,11 @@ public class DonorController {
         Donor donor=donorService.findById(id);
         model.addAttribute(session.getAttribute("logged_user"));
         model.addAttribute("donor",donor);
-        return "donor-application";
+        if (donor.getStatus().equals("Pending Review")) {
+            return "donor/donor-status";
+        }
+        else{
+            return "donor/donor-approval";
+        }
     }
 }

@@ -178,7 +178,7 @@
     <div class="container text-center">
         <h2 class="mb-4">Ready to Be a Hero?</h2>
         <p class="lead mb-4">Login and Apply your registration is the first step to saving a life. Join the eDonorNet community today.</p>
-        <a href="/signin" class="btn btn-danger btn-lg px-4">Login</a>
+        <a href="/user/signin" class="btn btn-danger btn-lg px-4">Login</a>
     </div>
 </section>
 

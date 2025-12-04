@@ -273,7 +273,7 @@
         </div>
 
         <p class="text-center mt-3">Already have an account?
-            <a href="/signin" class="auth-toggle">Sign in</a>
+            <a href="/user/signin" class="auth-toggle">Sign in</a>
         </p>
     </div>
 </div>

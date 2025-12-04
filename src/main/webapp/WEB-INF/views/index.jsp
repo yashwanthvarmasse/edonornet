@@ -32,10 +32,10 @@
                     <a class="nav-link" href="/recipient_info">Recipient Info</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/login">Admin Dashboard</a>
+                    <a class="nav-link" href="/admin/signin">Admin Login</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/signin" class="btn btn-outline-danger ms-2">Login</a>
+                    <a href="/user/signin" class="btn btn-outline-danger ms-2">Login</a>
                 </li>
             </ul>
         </div>

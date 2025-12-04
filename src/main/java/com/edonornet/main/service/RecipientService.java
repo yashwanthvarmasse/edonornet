@@ -23,5 +23,15 @@ public class RecipientService {
         List<Recipient> requests=recipientRepo.findByEmail(email);
         return requests==null? Collections.emptyList():requests;
     }
+
+    public Recipient findById(Long Id){
+        return recipientRepo.findById(Id).orElse(null);
+    }
+
+    public List<Recipient> findAll(){
+        List<Recipient> requests = recipientRepo.findAll();
+        return requests==null? Collections.emptyList():requests;
+    }
+
     
 }

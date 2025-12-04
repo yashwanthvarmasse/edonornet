@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied - eDonor Net Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            border-left: 5px solid #cc0000;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .icon {
+            color: #cc0000;
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #cc0000;
+            margin-bottom: 10px;
+            font-size: 24px;
+            word-wrap: break-word;
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        .reason {
+            font-weight: bold;
+            color: #555;
+            padding: 10px;
+            background-color: #fcebeb;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 15px;
+            word-wrap: break-word;
+        }
+
+        .links-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .action-link {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
+        .separator {
+            color: #999;
+            margin: 0 5px;
+        }
+
+        .support-button {
+            text-decoration: none;
+            color: #fff;
+            background-color: #28a745;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .support-button:hover {
+            background-color: #1e7e34;
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 25px;
+            }
+
+            h1 {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .icon {
+                font-size: 40px;
+                margin-bottom: 12px;
+            }
+
+            .reason {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .links-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .separator {
+                display: none;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 25px 20px;
+                border-left-width: 4px;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 13px;
+                margin-bottom: 18px;
+            }
+
+            .icon {
+                font-size: 36px;
+            }
+
+            .reason {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            .action-link {
+                font-size: 14px;
+            }
+
+            .support-button {
+                padding: 10px 15px;
+                font-size: 14px;
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+
+        /* Large desktop screens */
+        @media (min-width: 1200px) {
+            .container {
+                padding: 45px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            .icon {
+                font-size: 52px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="icon">
+        &#9888;
+    </div>
+
+    <h1>ADMIN ACCESS DENIED</h1>
+
+    <p class="reason">
+        Reason: No access permitted to this ID.
+    </p>
+
+    <p>
+        The page you attempted to access requires <strong>Administrator</strong> privileges within the eDonor Net system. Your current user account (ID: <strong>{orgId}</strong>) does not have the necessary security role assigned.
+    </p>
+
+    <p>
+        If you believe this is an error, please contact your system administrator or the eDonor Net support team.
+    </p>
+
+    <div class="links-container">
+        <a href="/admin/signin" class="action-link">Return to Login Page</a>
+        <span class="separator">|</span>
+        <a href="/" class="action-link">Go to Public Homepage</a>
+    </div>
+
+    <a href="mailto:edonornet@gmail.com" class="support-button">Contact Customer Support</a>
+</div>
+
+</body>
+</html>
