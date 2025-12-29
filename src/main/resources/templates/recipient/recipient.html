@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Updated Title -->
     <title>Request Blood | eDonorNet</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -24,7 +23,7 @@
 
         .navbar {
             background-color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             padding: 15px 0;
         }
 
@@ -34,9 +33,7 @@
             font-size: 1.5rem;
         }
 
-        .user-avatar {
-            width: 32px;
-            height: 32px;
+        .user-avatar, .user-avatar-large {
             border-radius: 50%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -44,22 +41,19 @@
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 0.75rem;
             text-transform: uppercase;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 0.75rem;
         }
 
         .user-avatar-large {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
             font-size: 0.9rem;
-            text-transform: uppercase;
         }
 
         .user-name {
@@ -69,7 +63,7 @@
         .dropdown-menu {
             min-width: 280px;
             padding: 0.5rem 0;
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 0.5rem;
             margin-top: 0.5rem;
         }
@@ -79,55 +73,6 @@
             background-color: #f8f9fa;
             border-radius: 0.5rem 0.5rem 0 0;
             margin-bottom: 0.25rem;
-        }
-
-        .dropdown-item {
-            padding: 0.5rem 1.25rem;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
-
-        .dropdown-item:hover {
-            background-color: #f8f9fa;
-            padding-left: 1.5rem;
-        }
-
-        .dropdown-item i {
-            width: 20px;
-            text-align: center;
-        }
-
-        .dropdown-item.text-danger:hover {
-            background-color: #fff5f5;
-            color: #dc3545 !important;
-        }
-
-        .dropdown-divider {
-            margin: 0.5rem 0;
-            opacity: 0.1;
-        }
-
-        .nav-link.dropdown-toggle {
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s ease;
-        }
-
-        .nav-link.dropdown-toggle:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-
-        .navbar-light .navbar-nav .nav-link.active {
-            font-weight: 500;
-            color: #667eea;
-        }
-
-        .shadow {
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-        }
-
-        .navbar-brand i {
-            margin-right: 10px;
         }
 
         .nav-link {
@@ -150,6 +95,7 @@
             height: 2px;
             background-color: var(--primary);
         }
+
         footer {
             background-color: var(--dark);
             color: white;
@@ -159,27 +105,8 @@
         footer a {
             color: white;
             text-decoration: none;
-            transition: color 0.3s;
         }
 
-        footer a:hover {
-            color: #adb5bd;
-        }
-
-        @media (max-width: 768px) {
-            .hero-section {
-                text-align: center;
-                padding: 60px 0;
-            }
-
-            .hero-section .d-flex {
-                justify-content: center;
-            }
-
-            .hero-section img {
-                margin-top: 30px;
-            }
-        }
         .whatsapp {
             background-color: rgb(17, 245, 5);
             padding: 30px;
@@ -196,11 +123,12 @@
             color: white;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.2s;
+            text-decoration: none;
         }
 
         .whatsapp:hover {
             transform: scale(1.2);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            color: white;
         }
     </style>
 </head>
@@ -208,7 +136,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" th:href="@{/}">
             <i class="fas fa-heartbeat"></i>eDonorNet
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -217,47 +145,47 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link " href="/user/dashboard">My Dashboard</a>
+                    <a class="nav-link" th:href="@{/user/dashboard}">My Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/donor">Donor Registration</a>
+                    <a class="nav-link" th:href="@{/user/donor}">Donor Registration</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/user/recipient">Request Blood</a>
+                    <a class="nav-link active" th:href="@{/user/recipient}">Request Blood</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle d-flex align-items-center"
-                       href="#"
-                       id="profileDropdown"
-                       role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        <div class="user-avatar me-2">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
-                        <span class="user-name">${logged_user.firstname}</span>
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown"
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar me-2"
+                             th:text="${logged_user.firstname.substring(0,1) + logged_user.lastname.substring(0,1)}">UN
+                        </div>
+                        <span class="user-name" th:text="${logged_user.firstname}">User</span>
                     </a>
-
                     <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
                         <li class="dropdown-header">
                             <div class="d-flex align-items-center">
-                                <div class="user-avatar-large me-2">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
+                                <div class="user-avatar-large me-2"
+                                     th:text="${logged_user.firstname.substring(0,1) + logged_user.lastname.substring(0,1)}">
+                                    UN
+                                </div>
                                 <div>
-                                    <div class="fw-bold">${logged_user.firstname} ${logged_user.lastname}</div>
-                                    <small class="text-muted">${logged_user.email}</small>
+                                    <div class="fw-bold"
+                                         th:text="${logged_user.firstname + ' ' + logged_user.lastname}">User Name
+                                    </div>
+                                    <small class="text-muted" th:text="${logged_user.email}">user@email.com</small>
                                 </div>
                             </div>
                         </li>
-                        <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item py-2" href="/user/settings">
-                                <i class="fas fa-cog me-2 text-secondary"></i>Settings
-                            </a>
+                            <hr class="dropdown-divider">
                         </li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item py-2" th:href="@{/user/settings}"><i
+                                class="fas fa-cog me-2 text-secondary"></i>Settings</a></li>
                         <li>
-                            <a class="dropdown-item py-2 text-danger" href="/user/logout">
-                                <i class="fas fa-sign-out-alt me-2"></i>Logout
-                            </a>
+                            <hr class="dropdown-divider">
                         </li>
+                        <li><a class="dropdown-item py-2 text-danger" th:href="@{/user/logout}"><i
+                                class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -268,7 +196,6 @@
 <section class="py-5" style="background-color: rgba(229, 57, 53, 0.05);">
     <div class="container text-center">
         <div class="feature-icon bg-danger bg-opacity-10 text-danger rounded-circle mx-auto mb-4">
-            <!-- Changed icon to blood drop -->
             <i class="fas fa-tint fa-2x"></i>
         </div>
         <h1 class="display-5 fw-bold">Request Blood for a Patient</h1>
@@ -277,7 +204,6 @@
     </div>
 </section>
 
-<!-- Main Form: Adapted for Recipient Request -->
 <section class="py-5">
     <div class="container">
         <div class="row justify-content-center">
@@ -285,19 +211,18 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4 p-md-5">
                         <h2 class="text-center mb-4">Patient & Blood Request Details</h2>
-
-                        <form action="/request-blood" method="POST" class="row g-3" enctype="multipart/form-data">
-
+                        <form th:action="@{/request-blood}" method="POST" class="row g-3">
                             <h4 class="mt-3 border-bottom pb-2">Patient Information</h4>
                             <div class="col-md-6">
                                 <label for="patientName" class="form-label">Patient's Full Name</label>
-                                <input type="text" class="form-control" id="patientName" name="patientName" placeholder="e.g., Jane Doe" required>
+                                <input type="text" class="form-control" id="patientName" name="patientName"
+                                       placeholder="e.g., Jane Doe" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="patientAge" class="form-label">Patient's Age</label>
-                                <input type="number" class="form-control" id="patientAge" name="patientAge" placeholder="e.g., 34" required>
+                                <input type="number" class="form-control" id="patientAge" name="patientAge"
+                                       placeholder="e.g., 34" required>
                             </div>
-
                             <div class="col-md-4">
                                 <label for="bloodGroup" class="form-label">Blood Group Needed</label>
                                 <select id="bloodGroup" name="bloodGroup" class="form-select" required>
@@ -312,109 +237,67 @@
                                     <option value="O-">O-</option>
                                 </select>
                             </div>
-
                             <div class="col-md-4">
                                 <label for="units" class="form-label">Units of Blood Required</label>
-                                <input type="number" class="form-control" id="units" name="units" min="1" placeholder="e.g., 2" required>
+                                <input type="number" class="form-control" id="units" name="units" min="1"
+                                       placeholder="e.g., 2" required>
                             </div>
-
                             <div class="col-md-4">
-                                <label for="reason" class="form-label">Reason for Request</label>
-                                <input type="text" class="form-control" id="request_reason" name="request_reason" placeholder="e.g., Surgery, Accident" required>
+                                <label for="request_reason" class="form-label">Reason for Request</label>
+                                <input type="text" class="form-control" id="request_reason" name="request_reason"
+                                       placeholder="e.g., Surgery, Accident" required>
                             </div>
 
                             <h4 class="mt-4 border-bottom pb-2">Contact & Location</h4>
-
                             <div class="col-md-6">
                                 <label for="hospitalName" class="form-label">Hospital Name</label>
-                                <input type="text" class="form-control" id="hospitalName" name="hospitalName" placeholder="e.g., City Hospital" required>
+                                <input type="text" class="form-control" id="hospitalName" name="hospitalName"
+                                       placeholder="e.g., City Hospital" required>
                             </div>
-
                             <div class="col-md-6">
                                 <label for="hospitalCity" class="form-label">Hospital City</label>
                                 <input type="text" class="form-control" id="hospitalCity" name="hospitalCity" required>
                             </div>
-
                             <div class="col-md-6">
                                 <label for="state" class="form-label">State</label>
                                 <select id="state" name="state" class="form-select" required>
                                     <option value="" selected disabled>Choose...</option>
-                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                                     <option value="Andhra Pradesh">Andhra Pradesh</option>
-                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                                    <option value="Assam">Assam</option>
-                                    <option value="Bihar">Bihar</option>
-                                    <option value="Chandigarh">Chandigarh</option>
-                                    <option value="Chhattisgarh">Chhattisgarh</option>
-                                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-                                    <option value="Delhi">Delhi</option>
-                                    <option value="Goa">Goa</option>
-                                    <option value="Gujarat">Gujarat</option>
-                                    <option value="Haryana">Haryana</option>
-                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                                    <option value="Jharkhand">Jharkhand</option>
-                                    <option value="Karnataka">Karnataka</option>
-                                    <option value="Kerala">Kerala</option>
-                                    <option value="Ladakh">Ladakh</option>
-                                    <option value="Lakshadweep">Lakshadweep</option>
-                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                                    <option value="Maharashtra">Maharashtra</option>
-                                    <option value="Manipur">Manipur</option>
-                                    <option value="Meghalaya">Meghalaya</option>
-                                    <option value="Mizoram">Mizoram</option>
-                                    <option value="Nagaland">Nagaland</option>
-                                    <option value="Odisha">Odisha</option>
-                                    <option value="Puducherry">Puducherry</option>
-                                    <option value="Punjab">Punjab</option>
-                                    <option value="Rajasthan">Rajasthan</option>
-                                    <option value="Sikkim">Sikkim</option>
-                                    <option value="Tamil Nadu">Tamil Nadu</option>
                                     <option value="Telangana">Telangana</option>
-                                    <option value="Tripura">Tripura</option>
-                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                                    <option value="Uttarakhand">Uttarakhand</option>
-                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Delhi">Delhi</option>
                                 </select>
                             </div>
-
                             <div class="col-md-6">
                                 <label for="attendantName" class="form-label">Attendant's Contact Name</label>
-                                <!-- Logged-in user's name can be pre-filled here -->
-                                <input type="text" class="form-control" id="attendantName" name="attendantName" value="${logged_user.firstname} ${logged_user.lastname}" readonly>
+                                <input type="text" class="form-control" id="attendantName" name="attendantName"
+                                       th:value="${logged_user.firstname + ' ' + logged_user.lastname}" readonly>
                             </div>
-
                             <div class="col-md-6">
                                 <label for="attendantPhone" class="form-label">Attendant's Contact Phone</label>
-                                <input type="tel" class="form-control" id="attendantPhone" name="attendantPhone" placeholder="${logged_user.phone}" readonly>
+                                <input type="tel" class="form-control" id="attendantPhone" name="attendantPhone"
+                                       th:value="${logged_user.phone}" readonly>
                             </div>
-
                             <div class="col-md-6">
                                 <label for="doctorName" class="form-label">Doctor's Name (Optional)</label>
-                                <input type="text" class="form-control" id="doctorName" name="doctorName" placeholder="e.g., Dr. Patel">
+                                <input type="text" class="form-control" id="doctorName" name="doctorName"
+                                       placeholder="e.g., Dr. Patel">
                             </div>
-
-<%--                            <h4 class="mt-4 border-bottom pb-2">Verification</h4>--%>
-
-<%--                            <div class="col-12">--%>
-<%--                                <label for="prescriptionUpload" class="form-label">Upload Doctor's Prescription / Request Form</label>--%>
-<%--                                <input class="form-control" type="file" id="prescriptionUpload" name="prescriptionUpload" accept="image/*,.pdf" required>--%>
-<%--                                <div class="form-text">A valid prescription or hospital request letter is **required** for verification.</div>--%>
-<%--                            </div>--%>
 
                             <div class="col-12 mt-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="consentCheck" required>
                                     <label class="form-check-label" for="consentCheck">
-                                        I certify that this is a genuine medical request and all information provided is true and accurate.
+                                        I certify that this is a genuine medical request and all information provided is
+                                        true and accurate.
                                     </label>
                                 </div>
                             </div>
-
                             <div class="col-12 mt-4">
                                 <button type="submit" class="btn btn-danger btn-lg w-100">Submit Blood Request</button>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -423,15 +306,14 @@
     </div>
 </section>
 
-<!-- "What's Next" Section: Adapted for Recipient -->
 <section class="py-5" style="background-color: rgba(229, 57, 53, 0.05);">
     <div class="container">
         <div class="row justify-content-center text-center">
             <div class="col-md-8">
                 <h2 class="mb-3">What's Next?</h2>
-                <p class="lead">Your request will be verified by our team. Once approved, we will send alerts to matching, available donors in your area who can then contact you.
-                </p>
-                <a href="/user/dashboard" class="btn btn-outline-danger mt-3">Back to My Dashboard</a>
+                <p class="lead">Your request will be verified by our team. Once approved, we will send alerts to
+                    matching, available donors in your area who can then contact you.</p>
+                <a th:href="@{/user/dashboard}" class="btn btn-outline-danger mt-3">Back to My Dashboard</a>
             </div>
         </div>
     </div>
@@ -452,9 +334,9 @@
             <div class="col-md-4 mb-4">
                 <h5 class="mb-3">Quick Links</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="/user/donor">Donor Registration</a></li>
-                    <li class="mb-2"><a href="/user/recipient">Blood Request</a></li>
-                    <li class="mb-2"><a href="/admin/login">Admin Dashboard</a></li>
+                    <li class="mb-2"><a th:href="@{/user/donor}">Donor Registration</a></li>
+                    <li class="mb-2"><a th:href="@{/user/recipient}">Blood Request</a></li>
+                    <li class="mb-2"><a th:href="@{/admin/login}">Admin Dashboard</a></li>
                 </ul>
             </div>
             <div class="col-md-4 mb-4">
@@ -471,6 +353,5 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

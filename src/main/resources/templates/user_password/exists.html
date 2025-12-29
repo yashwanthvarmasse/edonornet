@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,19 +10,22 @@
         body {
             background-color: #f8f9fa;
         }
+
         .container {
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
         }
+
         .auth-container {
             max-width: 900px;
             width: 100%;
             border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
         }
+
         .auth-image {
             background: linear-gradient(rgba(23, 162, 184, 0.85), rgba(23, 162, 184, 0.85)), url('https://images.unsplash.com/photo-1599043513900-ed1e00738e41?q=80&w=1974&auto=format&fit=crop');
             background-size: cover;
@@ -30,14 +33,36 @@
             padding: 3rem;
             color: white;
         }
+
         .auth-form {
             background-color: #ffffff;
             padding: 3rem;
         }
+
         .error-icon {
             font-size: 3rem;
             color: #17a2b8;
             margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .btn-primary:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+
+        .btn-outline-primary {
+            color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #17a2b8;
+            color: white;
         }
     </style>
 </head>
@@ -77,11 +102,11 @@
                         <p class="mb-4">An account with this email address is already registered.</p>
 
                         <div class="d-grid gap-3">
-                            <a href="/user/signin" class="btn btn-primary py-2">
+                            <a th:href="@{/user/signin}" class="btn btn-primary py-2">
                                 <i class="fas fa-sign-in-alt me-2"></i> Login Instead
                             </a>
-                            <a href="/forget" class="btn btn-outline-primary py-2">
-                                <i class="fas fa-edit me-2"></i> Try Forget Password
+                            <a th:href="@{/forget}" class="btn btn-outline-primary py-2">
+                                <i class="fas fa-key me-2"></i> Reset Password
                             </a>
                         </div>
                     </div>

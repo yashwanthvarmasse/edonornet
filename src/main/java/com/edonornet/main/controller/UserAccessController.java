@@ -49,7 +49,7 @@ public class UserAccessController {
             else{
                 user_login.setStatus("Successfull");
                 user_login.setEmail(email);
-//                loginService.save(user_login);
+                loginService.save(user_login);
                 session.setAttribute("logged_user",user);
                 return "redirect:/user/dashboard";
             }

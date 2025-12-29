@@ -45,6 +45,6 @@ public class PasswordsController {
     public String pass(String password,HttpSession session){
         User user= (User) session.getAttribute("demouser");
         userService.resetpassword(password,user.getEmail());
-        return "signin";
+        return "redirect:/user/signin";
     }
 }

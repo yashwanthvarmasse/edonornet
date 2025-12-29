@@ -29,7 +29,7 @@ public class AdminDashboardController {
 
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model){
-        model.addAttribute(session.getAttribute("logged_admin"));
+        model.addAttribute("logged_admin",session.getAttribute("logged_admin"));
         List<Donor> donations = donorService.findAll();
         List<Recipient> requests =recipientService.findAll();
         model.addAttribute("donations",donations==null? Collections.emptyList():donations);
@@ -50,11 +50,6 @@ public class AdminDashboardController {
     @GetMapping("/drives")
     public String drives(){
         return "admin/drives";
-    }
-
-    @GetMapping("/reports")
-    public String reports(){
-        return "admin/reports";
     }
 
 }

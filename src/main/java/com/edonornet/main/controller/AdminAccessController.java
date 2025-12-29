@@ -79,7 +79,7 @@ public class AdminAccessController {
 
             admin.setOrgId(id);
             adminService.save(admin);
-            return "redirect:/admin/signin";
+            return "redirect:/admin/login";
         }
 
     }

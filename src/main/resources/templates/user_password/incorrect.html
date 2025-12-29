@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
         .auth-container {
             max-width: 1000px;
             margin: auto;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: hidden;
             position: relative;
@@ -87,17 +87,22 @@
             justify-content: center;
             color: white;
             transition: all 0.3s;
+            text-decoration: none;
         }
 
         .back-button:hover {
             background-color: rgba(255, 255, 255, 0.3);
             transform: translateX(-2px);
+            color: white;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="auth-container">
+        <a th:href="@{/user/signin}" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <div class="row g-0">
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="auth-image h-100">
@@ -130,10 +135,10 @@
                         <p class="mb-4">The password you entered doesn't match our records.</p>
 
                         <div class="d-grid gap-3">
-                            <a href="/forget" class="btn btn-primary py-2">
+                            <a th:href="@{/forget}" class="btn btn-primary py-2">
                                 <i class="fas fa-key me-2"></i> Reset Password
                             </a>
-                            <a href="/user/signin" class="btn btn-outline-primary py-2">
+                            <a th:href="@{/user/signin}" class="btn btn-outline-primary py-2">
                                 <i class="fas fa-sign-in-alt me-2"></i> Try Again
                             </a>
                         </div>

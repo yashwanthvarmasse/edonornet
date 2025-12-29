@@ -29,7 +29,10 @@ public class UserDashboardController {
     public String dashboard(HttpSession session, Model model){
         //here the login can be validated again...
         User user= (User) session.getAttribute("logged_user");
-        model.addAttribute(session.getAttribute("logged_user"));
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("logged_user",user);
         List<Donor> donations = donorService.findDonor(user.getEmail());
         List<Recipient> requests =recipientService.findRecipient(user.getEmail());
         model.addAttribute("donations",donations==null? Collections.emptyList():donations);
@@ -39,13 +42,13 @@ public class UserDashboardController {
 
     @GetMapping("/donor")
     public String donor(Model model,HttpSession session){
-        model.addAttribute(session.getAttribute("logged_user"));
+        model.addAttribute("logged_user",session.getAttribute("logged_user"));
         return "donor/donor";
     }
 
     @GetMapping("/recipient")
     public String recipient(Model model,HttpSession session){
-        model.addAttribute(session.getAttribute("logged_user"));
+        model.addAttribute("logged_user",session.getAttribute("logged_user"));
         return "recipient/recipient";
     }
     

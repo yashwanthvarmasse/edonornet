@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eDonorNet - Blood Drives</title>
+    <title>eDonorNet - Drive Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -17,105 +20,53 @@
             min-height: 100vh;
         }
 
-        .container {
+        .container-fluid {
             display: flex;
             min-height: 100vh;
+            padding: 0;
         }
 
+        /* Sidebar - Theme Consistent */
         .sidebar {
-            width: 260px;
+            width: 280px;
             background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
             color: #1f2937;
-            padding: 0;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             height: 100vh;
-            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 280px;
+            background: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .logo {
-            padding: 30px 20px;
-            font-size: 28px;
+            padding: 28px 20px;
+            font-size: 22px;
             font-weight: bold;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             background: rgba(220, 38, 38, 0.1);
             color: #dc2626;
-        }
-
-        .nav-menu {
-            list-style: none;
-            padding: 0;
-        }
-
-        .nav-menu li {
-            padding: 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-            color: #dc2626;
-        }
-
-        .nav-menu li a {
-            display: block;
-            padding: 15px 25px;
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .nav-menu li:hover {
-            background: rgba(220, 38, 38, 0.1);
-            border-left-color: #dc2626;
-            color: #1f2937;
-        }
-
-        .nav-menu li.active {
-            background: rgba(220, 38, 38, 0.15);
-            border-left-color: #dc2626;
-            color: #dc2626;
-            font-weight: 600;
-        }
-
-        .logout, .settings, .user-profile {
-            position: absolute;
-            width: 260px;
-            padding: 15px 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #4b5563;
-            text-decoration: none;
-        }
-
-        .logout {
-            bottom: 20px;
-            color: #dc2626;
-            font-weight: 600;
-        }
-
-        .logout:hover {
-            background: rgba(220, 38, 38, 0.1);
-        }
-
-        .settings {
-            bottom: 160px;
-        }
-
-        .settings:hover {
-            background: rgba(220, 38, 38, 0.1);
-            color: #1f2937;
-        }
-
-        .user-profile {
-            bottom: 70px;
             display: flex;
             align-items: center;
             gap: 12px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .user-profile {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
         .user-avatar {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
             display: flex;
@@ -123,268 +74,358 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 18px;
-            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
         }
 
-        .user-name {
-            font-weight: 600;
-            color: #1f2937;
-            font-size: 15px;
-            margin-bottom: 2px;
+        .nav-menu {
+            list-style: none;
+            padding: 20px 0;
         }
 
-        .user-role {
-            font-size: 12px;
-            color: #6b7280;
+        .nav-menu li {
+            margin: 8px 12px;
+            border-radius: 12px;
+            border-left: 4px solid transparent;
         }
 
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            margin-left: 260px;
-            overflow-y: auto;
-            height: 100vh;
-        }
-
-        .header {
-            background: white;
-            padding: 25px 30px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: #1f2937;
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-
-        .header p {
-            color: #6b7280;
-            font-size: 16px;
-        }
-
-        .controls-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 20px 30px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-        }
-
-        .filter-group {
+        .nav-menu li a {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .filter-group input[type="text"], .filter-group select {
-            padding: 10px 15px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .btn-primary {
-            background-color: #dc2626;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .drives-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .drive-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            border-top: 5px solid #dc2626;
-            transition: transform 0.3s ease;
-        }
-
-        .drive-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .drive-status {
-            font-size: 12px;
-            font-weight: 600;
-            padding: 5px 10px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .status-upcoming {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-
-        .status-completed {
-            background: #d1fae5;
-            color: #059669;
-        }
-
-        .status-pending {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .drive-card h3 {
-            font-size: 20px;
+            gap: 14px;
+            padding: 16px 20px;
             color: #1f2937;
-            margin-bottom: 10px;
-        }
-
-        .drive-detail {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 8px;
-        }
-
-        .drive-detail strong {
-            color: #1f2937;
-            font-weight: 600;
-        }
-
-        .drive-footer {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #f3f4f6;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .goal-progress {
-            font-size: 14px;
-            font-weight: 600;
-            color: #dc2626;
-        }
-
-        .action-link {
-            color: #4b5563;
             text-decoration: none;
             font-weight: 500;
         }
 
-        .action-link:hover {
-            color: #dc2626;
-            text-decoration: underline;
+        .nav-menu li.active {
+            background: rgba(220, 38, 38, 0.15);
+            border-left-color: #dc2626;
         }
 
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
-            }
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            margin-left: 280px;
+        }
 
-            .main-content {
-                padding: 20px;
-                margin-left: 0;
-            }
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
 
-            .logout, .settings, .user-profile {
-                position: relative;
-                width: 100%;
-            }
+        .header-text h1 {
+            color: #1f2937;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* Drive Stats */
+        .drive-analytics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1f2937;
+            margin-top: 5px;
+        }
+
+        /* Management Tools */
+        .tool-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-schedule {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-schedule:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        /* Table */
+        .drive-table-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .drive-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .drive-table th {
+            background: #f9fafb;
+            padding: 15px;
+            text-align: left;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .drive-table td {
+            padding: 18px 15px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 14px;
+        }
+
+        .badge-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-upcoming {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-completed {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        /* Modal Customization */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+        }
+
+        .modal-header {
+            background: #f8fafc;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
-<div class="container">
+
+<div class="container-fluid">
     <aside class="sidebar">
-        <div class="logo">eDonorNet</div>
+        <div class="logo"><i class="fas fa-heartbeat"></i> <span>eDonorNet</span></div>
         <ul class="nav-menu">
-            <li><a th:href="@{/admin/dashboard}">Dashboard</a></li>
-            <li><a th:href="@{/admin/donor/panel}">Donor Management</a></li>
-            <li><a th:href="@{/admin/request/panel}">Blood Inventory</a></li>
-            <li class="active"><a th:href="@{/admin/drives}">Blood Drives</a></li>
-            <li><a th:href="@{/admin/reports}">Reports & Analytics</a></li>
+            <li><a th:href="@{/admin/dashboard}"><i class="fas fa-chart-line"></i><span>Dashboard</span></a></li>
+            <li><a th:href="@{/admin/donor/panel}"><i class="fas fa-users"></i><span>Donor Management</span></a></li>
+            <li><a th:href="@{/admin/request/panel}"><i class="fas fa-tint"></i><span>Blood Inventory</span></a></li>
+            <li class="active"><a th:href="@{/admin/drives}"><i
+                    class="fas fa-calendar-alt"></i><span>Blood Drives</span></a></li>
         </ul>
-        <a th:href="@{/admin/settings}" class="settings">⚙️ Settings</a>
-        <div class="user-profile">
-            <div class="user-avatar" th:text="${#strings.substring(adminName,0,1)}">A</div>
-            <div class="user-info">
-                <div class="user-name" th:text="${adminName}">Admin User</div>
-                <div class="user-role">Administrator</div>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar" th:text="${#strings.substring(adminName != null ? adminName : 'A',0,1)}">A
+                </div>
+                <div class="user-info">
+                    <div class="user-name" th:text="${adminName != null ? adminName : 'Admin User'}">Admin User</div>
+                    <div class="user-role">Administrator</div>
+                </div>
             </div>
+            <a th:href="@{/admin/logout}"
+               style="display: flex; padding: 15px 25px; color: #dc2626; text-decoration: none; gap: 12px; font-weight: 600;">
+                <i class="fas fa-sign-out-alt"></i><span>Log Out</span>
+            </a>
         </div>
-        <a th:href="@{/admin/logout}" class="logout">🚪 Log Out</a>
     </aside>
 
     <main class="main-content">
-        <div class="header">
-            <h1>Blood Drive Management 📍</h1>
-            <p>Schedule, approve, and track the performance of all blood collection events.</p>
+        <div class="header-flex">
+            <div class="header-text">
+                <h1>Blood Drive Management 📍</h1>
+                <p>Organize, track, and analyze community blood collection events.</p>
+            </div>
+            <button class="btn-schedule" data-bs-toggle="modal" data-bs-target="#scheduleDriveModal">
+                <i class="fas fa-plus me-2"></i> Schedule New Drive
+            </button>
         </div>
 
-        <div class="controls-bar">
-            <form th:action="@{/admin/drives/search}" method="get" class="filter-group">
-                <input type="text" name="query" placeholder="Search by Location or Host...">
-                <select name="status">
-                    <option value="">Filter by Status</option>
-                    <option value="upcoming">Upcoming</option>
-                    <option value="pending">Pending Review</option>
-                    <option value="completed">Completed</option>
+        <div class="drive-analytics">
+            <div class="stat-card">
+                <div class="stat-label">Total Drives (Year)</div>
+                <div class="stat-value" th:text="${totalDrives ?: '48'}">48</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active Today</div>
+                <div class="stat-value" style="color: #10b981;" th:text="${activeToday ?: '3'}">3</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Avg. Units/Drive</div>
+                <div class="stat-value" th:text="${avgUnits ?: '42'}">42</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Volunteer Outreach</div>
+                <div class="stat-value" th:text="${volunteers ?: '156'}">156</div>
+            </div>
+        </div>
+
+        <div class="tool-bar">
+            <div class="search-box" style="width: 400px;">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                    <input type="text" class="form-control border-start-0"
+                           placeholder="Search by Location or Organizer...">
+                </div>
+            </div>
+            <div class="filters d-flex gap-2">
+                <select class="form-select" style="width: 150px;">
+                    <option>All Status</option>
                 </select>
-                <button type="submit" class="btn-primary">Search</button>
-            </form>
-            <a th:href="@{/admin/drives/new}" class="btn-primary">
-                + Schedule New Drive
-            </a>
+                <button class="btn btn-light"><i class="fas fa-download"></i></button>
+            </div>
         </div>
 
-        <div class="drives-grid">
-            <div class="drive-card" th:each="drive : ${drives}">
-                <span th:class="'drive-status ' +
-                    (${drive.status == 'upcoming'} ? 'status-upcoming' :
-                    (${drive.status == 'completed'} ? 'status-completed' : 'status-pending'))"
-                      th:text="${#strings.capitalize(drive.status)}">Upcoming</span>
-
-                <h3 th:text="${drive.title}">Drive Title</h3>
-
-                <div class="drive-detail">🗓️ <strong>Date:</strong> <span th:text="${drive.date}">Date</span></div>
-                <div class="drive-detail">📍 <strong>Location:</strong> <span th:text="${drive.location}">Location</span>
-                </div>
-                <div class="drive-detail">👥 <strong>Host:</strong> <span th:text="${drive.host}">Host Name</span></div>
-
-                <div class="drive-footer">
-                    <span class="goal-progress"
-                          th:text="'Goal: ' + ${drive.goalUnits} + ' Units (' + ${drive.regCount} + ' Registered)'">
-                        Goal: 0 Units
-                    </span>
-                    <div>
-                        <a th:href="@{'/admin/drives/edit/' + ${drive.id}}" class="action-link">Edit</a> |
-                        <a th:href="@{'/admin/drives/report/' + ${drive.id}}" class="action-link"
-                           th:if="${drive.status == 'completed'}">Report</a>
-                        <a href="#" class="action-link" th:unless="${drive.status == 'completed'}">Share</a>
-                    </div>
-                </div>
-            </div>
-
-            <div th:if="${#lists.isEmpty(drives)}" class="header" style="grid-column: 1/-1; text-align: center;">
-                <p>No blood drives found matching your criteria.</p>
-            </div>
+        <div class="drive-table-container">
+            <table class="drive-table">
+                <thead>
+                <tr>
+                    <th>Drive Name / Location</th>
+                    <th>Date & Time</th>
+                    <th>Organizer</th>
+                    <th>Target Units</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="drive : ${driveList}">
+                    <td>
+                        <div class="fw-bold" th:text="${drive.name}">City University Mega Drive</div>
+                        <div class="text-muted small" th:text="${drive.location}">Main Campus, Block C</div>
+                    </td>
+                    <td>
+                        <div th:text="${drive.date}">Dec 25, 2025</div>
+                        <div class="text-muted small">09:00 AM - 05:00 PM</div>
+                    </td>
+                    <td th:text="${drive.organizer}">Red Cross Youth</td>
+                    <td th:text="${drive.target + ' Units'}">100 Units</td>
+                    <td><span class="badge-status status-upcoming">Upcoming</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-secondary me-1"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr th:if="${driveList == null}">
+                    <td>
+                        <div class="fw-bold">Corporate Wellness Drive</div>
+                        <div class="text-muted small">Tech Park, Hub 2</div>
+                    </td>
+                    <td>Dec 20, 2025<br><small class="text-muted">10 AM - 4 PM</small></td>
+                    <td>Global Solutions Inc</td>
+                    <td>50 Units</td>
+                    <td><span class="badge-status status-active">Active Now</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-secondary me-1">Manage</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="modal fade" id="scheduleDriveModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Schedule New Blood Drive</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form th:action="@{/admin/drives/create}" method="post">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Drive Name / Title</label>
+                            <input type="text" name="name" class="form-control"
+                                   placeholder="e.g. Community Health Fair 2026" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Date</label>
+                            <input type="date" name="date" class="form-control" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Start Time</label>
+                            <input type="time" name="startTime" class="form-control" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">End Time</label>
+                            <input type="time" name="endTime" class="form-control" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Venue Address / Location</label>
+                            <input type="text" name="location" class="form-control"
+                                   placeholder="Full address of the event" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Organizing Entity</label>
+                            <input type="text" name="organizer" class="form-control" placeholder="Hospital or NGO name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Target Collection (Units)</label>
+                            <input type="number" name="target" class="form-control" placeholder="e.g. 50">
+                        </div>
+                    </div>
+                    <div class="mt-4 text-end">
+                        <button type="button" class="btn btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-schedule">Create Blood Drive</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

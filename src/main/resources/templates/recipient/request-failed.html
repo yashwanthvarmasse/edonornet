@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
             --secondary: #1976d2;
             --light: #f8f9fa;
             --dark: #212529;
-            --danger: #dc3545; /* Explicit danger for rejected status */
+            --danger: #dc3545;
         }
 
         body {
@@ -22,10 +22,9 @@
             background-color: var(--light);
         }
 
-        /* --- Navbar Styles (unchanged) --- */
         .navbar {
             background-color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             padding: 15px 0;
         }
 
@@ -76,7 +75,15 @@
             justify-content: center;
             margin-right: 10px;
             font-weight: bold;
+            text-transform: uppercase;
         }
+
+        .request-details {
+            border-left: 5px solid var(--danger);
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
         footer {
             background-color: var(--dark);
             color: white;
@@ -92,13 +99,6 @@
         footer a:hover {
             color: #adb5bd;
         }
-
-        /* Specific style for details box */
-        .request-details {
-            border-left: 5px solid var(--danger);
-            padding-left: 20px;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 
@@ -106,7 +106,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" th:href="@{/}">
             <i class="fas fa-heartbeat"></i>eDonorNet
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -115,18 +115,20 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/dashboard">My Dashboard</a>
+                    <a class="nav-link" th:href="@{/user/dashboard}">My Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/donor">Donor Registration</a>
+                    <a class="nav-link" th:href="@{/user/donor}">Donor Registration</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/user/recipient">Request Blood</a>
+                    <a class="nav-link active" th:href="@{/user/recipient}">Request Blood</a>
                 </li>
                 <li class="nav-item">
                     <div class="user-profile">
-                        <div class="user-avatar">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
-                        <span >${logged_user.firstname}</span>
+                        <div class="user-avatar"
+                             th:text="${logged_user.firstname.substring(0,1) + logged_user.lastname.substring(0,1)}">JD
+                        </div>
+                        <span th:text="${logged_user.firstname}">User</span>
                     </div>
                 </li>
             </ul>
@@ -136,11 +138,13 @@
 
 <section class="py-5" style="background-color: rgba(220, 53, 69, 0.05);">
     <div class="container text-center">
-        <div class="feature-icon bg-danger bg-opacity-10 text-danger rounded-circle mx-auto mb-4" style="width: 4rem; height: 4rem; display: flex; align-items: center; justify-content: center;">
+        <div class="feature-icon bg-danger bg-opacity-10 text-danger rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center"
+             style="width: 4rem; height: 4rem;">
             <i class="fas fa-times-circle fa-2x"></i>
         </div>
         <h1 class="display-5 fw-bold text-danger">Blood Request Rejected</h1>
-        <p class="lead text-muted">We sincerely apologize, but your blood request application could not be approved for the safety of the process.</p>
+        <p class="lead text-muted">We sincerely apologize, but your blood request application could not be approved for
+            the safety of the process.</p>
     </div>
 </section>
 
@@ -153,10 +157,15 @@
                         <h2 class="text-center mb-4">Request Details & Rejection Summary</h2>
 
                         <div class="request-details mb-5">
-                            <p class="mb-0"><strong>Request ID:</strong> RQS-${recipient.id}</p>
-                            <p class="mb-0"><strong>Patient Name:</strong> ${recipient.patientName}</p>
-                            <p class="mb-0"><strong>Blood Group:</strong> ${recipient.bloodGroup}</p>
-                            <p class="mb-0"><strong>Status:</strong> <span class="badge bg-danger">${recipient.status}</span></p>
+                            <p class="mb-0"><strong>Request ID:</strong> <span
+                                    th:text="'RQS-' + ${recipient.id}">RQS-0</span></p>
+                            <p class="mb-0"><strong>Patient Name:</strong> <span th:text="${recipient.patientName}">Patient Name</span>
+                            </p>
+                            <p class="mb-0"><strong>Blood Group:</strong> <span
+                                    th:text="${recipient.bloodGroup}">B+</span></p>
+                            <p class="mb-0"><strong>Status:</strong> <span class="badge bg-danger"
+                                                                           th:text="${recipient.status}">Rejected</span>
+                            </p>
                         </div>
 
                         <div class="alert alert-danger" role="alert" id="reasons-alert-box">
@@ -164,39 +173,39 @@
                             <p>To resubmit, please review and correct the following issues:</p>
                             <hr>
                             <ul class="mb-0" id="reasons-list">
-                                <c:choose>
-                                    <c:when test="${not empty reasons}">
-                                        <c:forEach var="reason" items="${reasons}">
-                                            <li><i class="fas fa-minus-circle me-2"></i>${reason}</li>
-                                        </c:forEach>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li><i class="fas fa-file-excel me-2"></i> **Missing or Invalid Prescription:** The uploaded prescription was illegible, expired, or not from a licensed physician.</li>
-                                        <li><i class="fas fa-map-marker-alt me-2"></i> **Unverified Hospital/Location:** The specified hospital or address could not be verified or is outside our service area.</li>
-                                        <li><i class="fas fa-phone-slash me-2"></i> **Unreachable Contact:** The attendant's contact number was unavailable or repeatedly unreachable during the verification call.</li>
-                                        <li><i class="fas fa-info-circle me-2"></i> **Incomplete/Inaccurate Data:** Key fields in the application were left blank or contained contradictory information.</li>
-                                    </c:otherwise>
-                                </c:choose>
+                                <th:block th:if="${not #lists.isEmpty(reasons)}">
+                                    <li th:each="reason : ${reasons}">
+                                        <i class="fas fa-minus-circle me-2"></i><span
+                                            th:text="${reason}">Reason text</span>
+                                    </li>
+                                </th:block>
 
-                                <%--
-                                <% List<String> reasonsList = (List<String>) request.getAttribute("reasons");
-                                   if (reasonsList != null) {
-                                       for (String reason : reasonsList) { %>
-                                           <li><i class="fas fa-minus-circle me-2"></i> <%= reason %></li>
-                                       <% }
-                                   } %>
-                                --%>
+                                <th:block th:if="${#lists.isEmpty(reasons)}">
+                                    <li><i class="fas fa-file-excel me-2"></i> **Missing or Invalid Prescription:** The
+                                        uploaded prescription was illegible, expired, or not from a licensed physician.
+                                    </li>
+                                    <li><i class="fas fa-map-marker-alt me-2"></i> **Unverified Hospital/Location:** The
+                                        specified hospital or address could not be verified.
+                                    </li>
+                                    <li><i class="fas fa-phone-slash me-2"></i> **Unreachable Contact:** The attendant's
+                                        contact number was unreachable during verification.
+                                    </li>
+                                    <li><i class="fas fa-info-circle me-2"></i> **Incomplete/Inaccurate Data:** Key
+                                        fields contained contradictory information.
+                                    </li>
+                                </th:block>
                             </ul>
                         </div>
 
                         <h4 class="mt-5">What to Do Next</h4>
-                        <p class="lead">You can correct the issues mentioned above and **resubmit a new request** immediately.</p>
+                        <p class="lead">You can correct the issues mentioned above and **resubmit a new request**
+                            immediately.</p>
 
                         <div class="text-center mt-4">
-                            <a href="/user/recipient" class="btn btn-danger btn-lg">
+                            <a th:href="@{/user/recipient}" class="btn btn-danger btn-lg">
                                 <i class="fas fa-redo me-2"></i>Resubmit Blood Request
                             </a>
-                            <a href="/user/dashboard" class="btn btn-outline-secondary btn-lg ms-3">
+                            <a th:href="@{/user/dashboard}" class="btn btn-outline-secondary btn-lg ms-3">
                                 <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
                             </a>
                         </div>
@@ -218,9 +227,9 @@
             <div class="col-md-4 mb-4">
                 <h5 class="mb-3">Quick Links</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="/user/donor">Donor Registration</a></li>
-                    <li class="mb-2"><a class="active" href="/user/recipient">Blood Request</a></li>
-                    <li class="mb-2"><a href="/admin/login">Admin Dashboard</a></li>
+                    <li class="mb-2"><a th:href="@{/user/donor}">Donor Registration</a></li>
+                    <li class="mb-2"><a th:href="@{/user/recipient}" class="text-danger fw-bold">Blood Request</a></li>
+                    <li class="mb-2"><a th:href="@{/admin/login}">Admin Dashboard</a></li>
                 </ul>
             </div>
             <div class="col-md-4 mb-4">

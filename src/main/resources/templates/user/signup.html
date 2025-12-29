@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+ <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -10,30 +10,28 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5; /* Light grey background */
+            background-color: #f0f2f5;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* Full viewport height */
-            padding: 20px; /* Padding around the main container */
+            min-height: 100vh;
+            padding: 20px;
             margin: 0;
         }
 
-        /* Main Auth Container - Holds both left and right sides */
         .auth-container {
             width: 100%;
-            max-width: 1000px; /* Reduced max-width for smaller overall size */
+            max-width: 1000px;
             background-color: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            overflow: hidden; /* Ensures rounded corners are respected */
-            display: flex; /* Use flexbox for side-by-side layout */
-            min-height: 600px; /* Minimum height for the entire box */
-            max-height: 80vh; /* Max height to fit within viewport, enables scrolling if needed */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            min-height: 600px;
+            max-height: 80vh;
             margin: auto;
         }
 
-        /* Back Button Styling (positioned relative to the body) */
         .back-button {
             position: absolute;
             top: 20px;
@@ -51,11 +49,11 @@
             color: #333;
             transition: background-color 0.2s;
         }
+
         .back-button:hover {
             background-color: #f8f9fa;
         }
 
-        /* Left Side: Image and Text Container */
         .auth-image-container {
             background: linear-gradient(rgba(229, 57, 53, 0.8), rgba(229, 57, 53, 0.8)),
             url('https://images.unsplash.com/photo-1576091160550-2173dba999ef');
@@ -68,56 +66,57 @@
             padding: 40px;
             width: 100%;
             max-width: 500px;
+            position: relative;
         }
 
         .auth-image-container img {
             position: absolute;
-            bottom: -50px; /* Adjust as needed to show desired part of the image */
+            bottom: -50px;
             left: 50%;
             transform: translateX(-50%);
-            max-width: 120%; /* Image can be slightly larger to fill space */
+            max-width: 120%;
             height: auto;
-            opacity: 0.8; /* Slightly transparent */
-            filter: grayscale(20%); /* Subtle grayscale */
-
-
+            opacity: 0.8;
+            filter: grayscale(20%);
         }
 
-        .auth-image-container h1, .auth-image-container p, .auth-image-container .icon-group {
-            position: relative; /* Bring text/icons above the image */
+        .auth-image-container h1,
+        .auth-image-container p,
+        .auth-image-container .icon-group {
+            position: relative;
             z-index: 2;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         .auth-image-container .icon-group {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            font-size: 0.95rem; /* Slightly smaller text for features */
-            max-width: 250px; /* Constrain width for better readability */
+            font-size: 0.95rem;
+            max-width: 250px;
             text-align: left;
         }
+
         .auth-image-container .icon-group i {
-            font-size: 1.2rem; /* Smaller icons */
+            font-size: 1.2rem;
             margin-right: 10px;
-            min-width: 25px; /* Ensure icon doesn't shrink */
+            min-width: 25px;
         }
 
-        /* Right Side: Form Container */
         .auth-form-container {
-            flex: 1; /* Takes equal space with the image container */
-            padding: 30px; /* Reduced padding for smaller size */
+            flex: 1;
+            padding: 30px;
             background-color: #ffffff;
-            overflow-y: auto; /* Enable vertical scrolling for the form */
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Pushes footer text to bottom */
+            justify-content: space-between;
         }
 
         .form-title {
             font-weight: 700;
             color: #333;
-            margin-bottom: 1.5rem; /* Reduced margin */
+            margin-bottom: 1.5rem;
             text-align: center;
         }
 
@@ -126,36 +125,42 @@
             color: #e53935;
             text-decoration: none;
         }
+
         .auth-toggle:hover {
             text-decoration: underline;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 992px) {
             .auth-image-container {
-                display: none; /* Hide image on smaller screens */
+                display: none;
             }
+
             .auth-form-container {
-                flex-basis: 100%; /* Form takes full width */
+                flex-basis: 100%;
                 padding: 25px;
             }
+
             .auth-container {
-                max-height: 95vh; /* Allow more vertical space on mobile */
-                min-height: unset; /* Remove min-height restriction */
+                max-height: 95vh;
+                min-height: unset;
             }
         }
+
         @media (max-width: 768px) {
             .back-button {
                 top: 10px;
                 left: 10px;
             }
+
             .auth-container {
                 margin: 10px;
-                max-width: 450px; /* Even smaller for mobile */
+                max-width: 450px;
             }
+
             .auth-form-container {
                 padding: 20px;
             }
+
             .form-title {
                 margin-bottom: 1rem;
             }
@@ -165,14 +170,14 @@
 
 <body>
 
-<button class="back-button" onclick="window.location.href='/'">
+<a th:href="@{/}" class="back-button">
     <i class="fas fa-arrow-left"></i>
-</button>
+</a>
 
 <div class="auth-container">
-
     <div class="auth-image-container d-none d-lg-flex">
-        <img src="https://cdni.iconscout.com/illustration/premium/thumb/blood-donation-2139686-1804193.png" alt="Blood Donation">
+        <img src="https://cdni.iconscout.com/illustration/premium/thumb/blood-donation-2139686-1804193.png"
+             alt="Blood Donation">
         <h1 class="display-4 fw-bold">Become a Life-Saver</h1>
         <p class="lead">Join our community of blood donors and help save lives today.</p>
         <div class="mt-4">
@@ -192,16 +197,17 @@
     </div>
 
     <div class="auth-form-container">
-        <div> <h2 class="form-title">Create Account</h2>
+        <div>
+            <h2 class="form-title">Create Account</h2>
 
-            <form id="registerUserForm" action="/create_user" method="post">
+            <form id="registerUserForm" th:action="@{/create_user}" method="post">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="firstName" class="form-label">First Name</label>
+                        <label for="firstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="firstname" name="firstname" required>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="lastName" class="form-label">Last Name</label>
+                        <label for="lastname" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="lastname" name="lastname" required>
                     </div>
                 </div>
@@ -218,8 +224,7 @@
                 <div class="mb-3">
                     <label for="signupPassword" class="form-label">Password</label>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="signupPassword" name="password"
-                               required>
+                        <input type="password" class="form-control" id="signupPassword" name="password" required>
                         <button class="btn btn-outline-secondary" type="button" id="toggleSignupPassword">
                             <i class="far fa-eye"></i>
                         </button>
@@ -228,13 +233,14 @@
                         <a href="#" class="text-danger" data-bs-toggle="modal"
                            data-bs-target="#passwordPolicyModal"> password policies</a>
                     </small>
-                    <small id="passwordPolicyError" class="text-danger d-none">Password does not meet policy requirements</small>
+                    <small id="passwordPolicyError" class="text-danger d-none">Password does not meet policy
+                        requirements</small>
                 </div>
                 <div class="mb-3">
                     <label for="confirmPassword" class="form-label">Confirm Password</label>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="confirmPassword"
-                               name="confirmpassword" required>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmpassword"
+                               required>
                         <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
                             <i class="far fa-eye"></i>
                         </button>
@@ -245,6 +251,16 @@
                 <div class="mb-3">
                     <label for="dob" class="form-label">Date of Birth</label>
                     <input type="date" class="form-control" id="dob" name="dob" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select class="form-select" id="gender" name="gender" required>
+                        <option value="" selected disabled>Select Your Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -264,20 +280,21 @@
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="agreeTerms" required>
                     <label class="form-check-label" for="agreeTerms">
-                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        I agree to the <a th:href="@{/terms}">Terms of Service</a> and <a
+                            th:href="@{/privacy}">Privacy Policy</a>
                     </label>
                 </div>
-                <button type="submit" id="createAccountBtn" class="btn btn-danger w-100 py-2 mb-3"
-                        disabled>Create Account</button>
+                <button type="submit" id="createAccountBtn" class="btn btn-danger w-100 py-2 mb-3" disabled>Create
+                    Account
+                </button>
             </form>
         </div>
 
         <p class="text-center mt-3">Already have an account?
-            <a href="/user/signin" class="auth-toggle">Sign in</a>
+            <a th:href="@{/user/signin}" class="auth-toggle">Sign in</a>
         </p>
     </div>
 </div>
-
 
 <div class="modal fade" id="passwordPolicyModal" tabindex="-1" aria-labelledby="passwordPolicyModalLabel"
      aria-hidden="true">
@@ -332,7 +349,6 @@
         const isPolicyMet = hasLength && hasCapital && hasSmall && hasNumber && hasSpecial;
 
         const passwordsMatch = password === confirmPassword;
-
         const bloodGroupIsValid = bloodGroupSelected !== "";
 
         if (password.length > 0 && !isPolicyMet) {
@@ -372,21 +388,17 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-
         if (document.getElementById('toggleSignupPassword')) {
             setupPasswordToggle('toggleSignupPassword', 'signupPassword');
             setupPasswordToggle('toggleConfirmPassword', 'confirmPassword');
         }
 
-        document.getElementById('firstname').addEventListener('input', checkFormValidity);
-        document.getElementById('lastname').addEventListener('input', checkFormValidity);
-        document.getElementById('signupEmail').addEventListener('input', checkFormValidity);
-        document.getElementById('phone').addEventListener('input', checkFormValidity);
-        document.getElementById('signupPassword').addEventListener('input', checkFormValidity);
-        document.getElementById('confirmPassword').addEventListener('input', checkFormValidity);
-        document.getElementById('dob').addEventListener('change', checkFormValidity);
-        document.getElementById('agreeTerms').addEventListener('change', checkFormValidity);
-        document.getElementById('bloodGroupSelect').addEventListener('change', checkFormValidity);
+        const inputs = ['firstname', 'lastname', 'signupEmail', 'phone', 'signupPassword', 'confirmPassword', 'dob', 'agreeTerms', 'bloodGroupSelect'];
+        inputs.forEach(id => {
+            const element = document.getElementById(id);
+            const event = (id === 'dob' || id === 'agreeTerms' || id === 'bloodGroupSelect') ? 'change' : 'input';
+            element.addEventListener(event, checkFormValidity);
+        });
 
         checkFormValidity();
     });

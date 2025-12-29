@@ -31,5 +31,6 @@ public class User {
     private Long phone;
     private int no_of_donations = 0;
     private int no_of_receivings = 0;
+    private String gender;
 
 }

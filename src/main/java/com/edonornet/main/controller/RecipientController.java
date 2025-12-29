@@ -1,5 +1,6 @@
 package com.edonornet.main.controller;
 
+import com.edonornet.main.model.Donor;
 import com.edonornet.main.model.Recipient;
 import com.edonornet.main.model.User;
 import com.edonornet.main.service.RecipientService;
@@ -39,13 +40,13 @@ public class RecipientController {
         recipient.setDate(LocalDate.now());
         recipientService.save(recipient);
         model.addAttribute("recipient",recipient);
-        return "recipient/recipient-registration";
+        return "redirect:/user/recipient/registration/RCP-"+recipient.getId();
     }
 
     @GetMapping("/user/recipient/registration/RCP-{id}")
     public String status(@PathVariable Long id,Model model,HttpSession session){
         Recipient recipient=recipientService.findById(id);
-        model.addAttribute(session.getAttribute("logged_user"));
+        model.addAttribute("logged_user",session.getAttribute("logged_user"));
         model.addAttribute("recipient",recipient);
         if (recipient.getStatus().equals("Pending Review")) {
             return "recipient/recipient-status";
