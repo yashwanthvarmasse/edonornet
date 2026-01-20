@@ -8,7 +8,9 @@ public class UserController {
 
 
     @GetMapping("/")
-    public String index(){
+    public String index(HttpSession session){
+        String os=System.getProperty("os.name");
+        session.setAttribute("os",os);
         return "index";
     }
 

@@ -57,7 +57,7 @@ public class UserAccessController {
     }
 
     @PostMapping("/create_user")
-    public String create_user(@ModelAttribute User user, HttpSession session){
+    public String create_user(@ModelAttribute User user){
 
         if(userService.findByEmail(user.getEmail()))
             return "user_password/exists";
