@@ -20,7 +20,10 @@ public class ErrorCatching {
 
     @PostMapping("/report-error")
     public String report(@RequestParam String details, @RequestParam String path, HttpSession session, HttpServletRequest request, Model model, Exception exception){
-        whatsappReporting.sendException(details,path,session,request,model,exception);
+
+        String exception_reason=exception.getClass().getName();
+        String message=exception.getMessage();
+        whatsappReporting.sendException(details,path,session,model);
         return "redirect:/";
     }
 }

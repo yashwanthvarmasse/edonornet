@@ -14,10 +14,10 @@ public class MailService {
         this.mailSender = mailSender;
     }
 
-    @Async
     public void send(String subject, String body) {
 
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("yashwanthvarma.sse@gmail.com");
         message.setTo("yashwanth.sse@gmail.com");
         message.setSubject(subject);
         message.setText(body);
